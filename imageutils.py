@@ -1,10 +1,9 @@
 import os
 
-##
-# Read PGM image files and asserts the first line for height width and maximum value
-#
 def read_pgm_image(pgmf):
-    """Return a raster of integers from a PGM as a list of lists."""
+    """Return a raster of integers from a PGM as a list of lists.
+       Number of lists within the raster = height of the image.
+       Number of elements within each list in the raster = width of the image """
     image_header = pgmf.readline().split()
     assert image_header[0] == 'P5'
 
@@ -19,17 +18,7 @@ def read_pgm_image(pgmf):
 	raster.append(row)
     return raster
 
-##
-# A generator function that calls read_pgm_image and 
-# returns of the result stack after next() is called from the calling function.
-#
 def read_pgm_from_directory_generator(imgDirectory):
+    """ Generator function which returns a raster for each pgm image in the specified directory"""
     for img in os.listdir(imgDirectory):
         yield read_pgm_image(open(imgDirectory + "/" + img, 'r'))
-
-##
-# Test Main Application
-#
-if __name__ == '__main__':
-    pgm_reader = read_pgm_from_directory_generator("TrainImages")
-    print next(pgm_reader)
