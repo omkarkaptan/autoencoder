@@ -1,5 +1,5 @@
-from utils import *
-from neuralnet import NeuralNet
+from utils.utils import *
+from neuralnet.neuralnet import NeuralNet
 
 def main():
     number_of_layers = read_number("Input Number of Layers: ")
