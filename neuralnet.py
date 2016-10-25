@@ -1,44 +1,31 @@
-import numpy as np
+from layer import Layer 
 
-# sigmoid function
-def nonlin(x,deriv=False):
-    if(deriv==True):
-        return x*(1-x)
-    return 1/(1+np.exp(-x))
+class NeuralNet:
     
-# input dataset
-X = np.array([  [0,0,1],
-                [0,1,1],
-                [1,0,1],
-                [1,1,1] ])
+    layers = None
 
-# output dataset            
-y = np.array([[0,0,1,1]]).T
+    def __init__(self, number_of_inputs, neurons_per_hidden_layer):
+	self.layers = []
+	input_layer = Layer(number_of_inputs, number_of_inputs, 0) # NUMBER OF NEURONS SAME AS NUMBER OF INPUTS
+	
+	self.layers.append(input_layer)
+	layer_number = 1
+	number_of_inputs_from_previous_layer = number_of_inputs
+	for number_of_neurons in neurons_per_hidden_layer:
+	    hidden_layer = Layer(number_of_neurons, number_of_inputs_from_previous_layer, layer_number)
+	    
+	    self.layers.append(hidden_layer)
+	    number_of_inputs_from_previous_layer = number_of_neurons
+	    layer_number = layer_number + 1
 
-# seed random numbers to make calculation
-# deterministic (just a good practice)
-np.random.seed(1)
+	output_layer = Layer(number_of_inputs, number_of_inputs_from_previous_layer, layer_number)
+	self.layers.append(output_layer)
 
-# initialize weights randomly with mean 0
-syn0 = 2*np.random.random((3,1)) - 1
+    def info(self):
+	print "Number of layers: {}\n".format(len(self.layers))
 
-for iter in xrange(10000):
+	print "Layers Info: \n"
 
-    # forward propagation
-    l0 = X
-    l1 = nonlin(np.dot(l0,syn0))
-
-    # how much did we miss?
-    l1_error = y - l1
-
-    # multiply how much we missed by the 
-    # slope of the sigmoid at the values in l1
-    l1_delta = l1_error * nonlin(l1,True)
-
-    # update weights
-    syn0 += np.dot(l0.T,l1_delta)
-
-print "Output After Training:"
-print l1
-
+	for layer in self.layers:
+	    layer.info()
 
