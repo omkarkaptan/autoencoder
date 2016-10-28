@@ -11,3 +11,6 @@ class WeightMatrix:
 	print "Number of inputs: {}".format(weightmatrix_dimensions[0])
 	print "Number of neurons in layer: {}".format(weightmatrix_dimensions[1])
 	print "Weight Matrix: {}\n".format(self.weightmatrix)
+
+    def dotproduct(self, input_matrix):
+	return np.dot(input_matrix, self.weightmatrix)
