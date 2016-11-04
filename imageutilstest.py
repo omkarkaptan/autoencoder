@@ -1,5 +1,6 @@
 import unittest
-from imageutils import *
+from utils.imageutils import *
+from utils.matrixutils import *
 
 class UtilsTest(unittest.TestCase):
     def test_read_single_pgm(self):
@@ -22,6 +23,15 @@ class UtilsTest(unittest.TestCase):
     	
     	self.assertEquals(image_count, 6)
 
+    def test_write_pgm(self):
+	pgm_image = open("testresources/sample.pgm", "r")
+	raster = read_pgm_image(pgm_image)
+	print raster
+	print type(raster)
+	raster_1d = convert_to_1D_array(raster)
+	twodlist = convert_1D_to_2D_array(raster_1d, 32)
+	print twodlist
+	print type(twodlist)
+
 if __name__ == '__main__':
     unittest.main()
-

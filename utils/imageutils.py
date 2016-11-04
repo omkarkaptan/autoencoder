@@ -22,3 +22,21 @@ def read_pgm_from_directory_generator(imgDirectory):
     """ Generator function which returns a raster for each pgm image in the specified directory"""
     for img in os.listdir(imgDirectory):
         yield read_pgm_image(open(imgDirectory + "/" + img, 'r'))
+
+def write_pgm_image(pgm_image_array, width, heighti, depth, filename, directory=""):
+    if len(pgm_image_array) != 1024:
+	return
+    
+    try: 
+	image_file = open(filename, "wb")
+    except IOError, er:
+      print "Cannot open file ", filename, "Exiting\n", er
+      sys.exit()
+
+    pgmfileheader = "P5 {} {} {}\n".format(width, height, depth)
+
+    image_file.write(pgmfileheader)
+    buff.tofile(image_file)
+
+    image_file.close()
+    
