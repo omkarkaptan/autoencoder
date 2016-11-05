@@ -14,7 +14,7 @@ def read_pgm_image(pgmf):
     for y in range(height):
 	row = []
 	for y in range(width):
-		row.append(ord(pgmf.read(1)))
+		row.append(ord(pgmf.read(1)) / (1.0*depth))
 	raster.append(row)
     return raster
 

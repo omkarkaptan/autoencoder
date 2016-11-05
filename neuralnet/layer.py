@@ -16,7 +16,7 @@ class Layer:
     def feedforward(self, input_matrix, activation_function):
 	input_to_neurons = self.weightmatrix.dotproduct(input_matrix)
 	print "Layer: {}".format(self.layer_number)
-	print "Input to layer: {}".format(input_matrix)
+	print "Input to layer: {}".format(len(input_matrix))
 	print "Input to Neurons: {}".format(input_to_neurons)
 	output_of_layer = activationfunctions.run_activation_function(input_to_neurons, activation_function)
 	print "Output of Layer: {}".format(output_of_layer)

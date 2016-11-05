@@ -4,7 +4,7 @@ from utils.matrixutils import *
 
 class UtilsTest(unittest.TestCase):
     def test_read_single_pgm(self):
-    	pgm_image = open("testresources/sample.pgm", "r")
+    	pgm_image = open("TrainImages/Adrien_Brody_0003.pgm", "r")
     	raster = read_pgm_image(pgm_image)
     	self.assertEquals(len(raster), 32)
     
@@ -14,6 +14,8 @@ class UtilsTest(unittest.TestCase):
     	    total_element_count = total_element_count +len(single_list)
     
     	self.assertEquals(total_element_count, 1024)
+
+	print raster
 
     def test_read_pgm_from_directory(self):
     	directory = "testresources/images"
