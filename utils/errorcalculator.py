@@ -6,8 +6,8 @@ def element_mean_square_error(expectedValues, observedValues):
     return sqrt(mean_squared_error(expectedValues, observedValues))
     
 def batch_mean_square_error(expectedBatchValues, observedBatchSize):
-    sum = 0
+    error_sum = 0
     batchSize = len(expectedBatchValues)
     for index in range(batchSize):
-        sum = sum + element_mean_square_error(expectedBatchValues[index], observedBatchSize[index])
-    return sum / batchSize
+        error_sum = error_sum + element_mean_square_error(expectedBatchValues[index], observedBatchSize[index])
+    return error_sum / batchSize
