@@ -23,12 +23,12 @@ def read_pgm_from_directory_generator(imgDirectory):
     for img in os.listdir(imgDirectory):
         yield read_pgm_image(open(imgDirectory + "/" + img, 'r'))
 
-def write_pgm_image(pgm_image_array, width, heighti, depth, filename, directory=""):
+def write_pgm_image(pgm_image_array, width, height, depth, filename, directory=""):
     if len(pgm_image_array) != 1024:
 	return
     
     try: 
-	image_file = open(filename, "wb")
+	image_file = open(directory + filename, "wb")
     except IOError, er:
       print "Cannot open file ", filename, "Exiting\n", er
       sys.exit()
@@ -36,7 +36,7 @@ def write_pgm_image(pgm_image_array, width, heighti, depth, filename, directory=
     pgmfileheader = "P5 {} {} {}\n".format(width, height, depth)
 
     image_file.write(pgmfileheader)
-    buff.tofile(image_file)
+    pgm_image_array.tofile(image_file)
 
     image_file.close()
     

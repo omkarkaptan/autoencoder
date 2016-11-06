@@ -25,6 +25,9 @@ def main():
     result = neural_net.feedforward(X)
 
     print "Result is: {}".format(result)
+    result = result * 255
+    print "Result after scale up is : {}".format(result)
+    write_pgm_image(result, 32, 32, 255, 'test_output.pgm', directory="/home/gerard/git/autoencoder/output/")
 
 if __name__ == "__main__":
     main()
