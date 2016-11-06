@@ -1,5 +1,6 @@
 from weightmatrix import WeightMatrix
 import activationfunctions
+import numpy as np
 
 class Layer:
     weightmatrix = None
@@ -14,6 +15,7 @@ class Layer:
 	self.weightmatrix.info()
 
     def feedforward(self, input_matrix, activation_function):
+        input_matrix = np.append(input_matrix, 1)
 	input_to_neurons = self.weightmatrix.dotproduct(input_matrix)
 	print "Layer: {}".format(self.layer_number)
 	print "Input to layer: {}".format(len(input_matrix))

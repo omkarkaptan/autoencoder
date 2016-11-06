@@ -11,12 +11,12 @@ class NeuralNet:
 	
 #	self.layers.append(input_layer)
 	layer_number = 1
-	number_of_inputs_from_previous_layer = number_of_inputs
+	number_of_inputs_from_previous_layer = number_of_inputs + 1
 	for number_of_neurons in neurons_per_hidden_layer:
 	    hidden_layer = Layer(number_of_neurons, number_of_inputs_from_previous_layer, layer_number)
 	    
 	    self.layers.append(hidden_layer)
-	    number_of_inputs_from_previous_layer = number_of_neurons
+	    number_of_inputs_from_previous_layer = number_of_neurons + 1
 	    layer_number = layer_number + 1
 
 	output_layer = Layer(number_of_inputs, number_of_inputs_from_previous_layer, layer_number)
@@ -33,7 +33,7 @@ class NeuralNet:
 	    layer.info()
 
     def feedforward(self, external_input):
-	input_to_layer = external_input
+        input_to_layer = external_input
 	 
 	for layer in self.layers:
 	    input_to_layer = layer.feedforward(input_to_layer, self.activation_function)
