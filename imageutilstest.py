@@ -34,6 +34,14 @@ class UtilsTest(unittest.TestCase):
 	twodlist = convert_1D_to_2D_array(raster_1d, 32)
 	print twodlist
 	print type(twodlist)
+    
+    def test_read_pgm_from_train_directory(self):
+        directory = "TrainImages"
+        image_count = 0
+        for image in read_pgm_from_directory_generator(directory):
+            image_count = image_count + 1
+            
+        print image_count
 
 if __name__ == '__main__':
     unittest.main()

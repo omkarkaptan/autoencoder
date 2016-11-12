@@ -3,6 +3,9 @@ from neuralnet.neuralnet import NeuralNet
 import numpy as np
 from utils.imageutils import *
 from utils.matrixutils import *
+from utils.errorcalculator import *
+from neuralnet.activationfunctions import *
+from sklearn.metrics.regression import mean_squared_error
 
 def main():
     pgm_image = open("testresources/sample.pgm", "r")
@@ -18,12 +21,14 @@ def main():
 	number_of_neurons = read_number("Input number of neurons in hidden layer {}: ".format(i+1))
 	neurons_per_layer.append(number_of_neurons)
 
-    neural_net = NeuralNet(number_of_inputs, neurons_per_layer, None)
+    neural_net = NeuralNet(number_of_inputs, neurons_per_layer, sigmoid, mean_square_error)
 
     neural_net.info()
 
     result = neural_net.feedforward(X)
-
+    
+    neural_net.backpropogate(X, result)
+    
     print "Result is: {}".format(result)
     result = result * 255
     print "Result after scale up is : {}".format(result)
