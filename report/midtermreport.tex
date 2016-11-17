@@ -366,7 +366,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-This report summarizes the implementation of an Autoencoder. A summary of the work done - namely the current implementation progress, challenges, future work, time line and references.
+This report summarizes the implementation of an Autoencoder as part of the project for class CSE 569. A summary of the work done - namely the current implementation progress, challenges, future work, time line and references.
 \end{abstract}
 
 % no keywords
@@ -416,8 +416,8 @@ The sigmoid function is chosen for this project which is represented as:
 f(n) = \frac{1}{1 + e^{-x}}
 \end{equation}
 
-\subsection{Forward Feed}
-The forward feed of the neural network is the first step in training an Autoencoder. In this step, a batch of training images passes through the neural network. Each image produces an output which is measured against the original image to check accuracy of the Autoencoder.
+\subsection{Feedforward}
+The feedforward of the neural network is the first step in training an Autoencoder. In this step, a batch of training images passes through the neural network. Each image produces an output which is measured against the original image to check accuracy of the Autoencoder.
 
 In this step, each neuron in an arbitrary layer receives an input from the output of the previous layer along with a bias input, each multiplied with a weight which indicates the importance given to this value while providing it as an input to the neuron. Thus, a cumulative input to a given layer is easily calculated by taking a dot product of the output of its previous layer with the input weight matrix for the layer in consideration. The activation function of each neuron in the layer is then fired for the cumulative input provided to it to get an output for this layer which is then propagated to the next layer. In this way, the input is propagated all the way through the neural net to produce an output.
 
@@ -428,7 +428,7 @@ MSE = \frac{1}{n} \sum_{1}^{n} \left(input - output\right)^2
 \end{equation}
 
 \subsection{Back Propagation}
-An Autoencoder needs to be trained to produce a lower dimensional encoding which will represent the original input as closely as possible. After completing a forward feed for a batch input, the error function will provide a measure of how far off the neural network is from the input. The back propagation phase will use this error measure to update the weight matrices in the neural net in a direction such that the weight change will help reduce the error. To achieve this, a partial differential has to be calculated of the error with respect to the weight at each layer. This can be calculated by using the chain rule for partial derivatives.
+An Autoencoder needs to be trained to produce a lower dimensional encoding which will represent the original input as closely as possible. After completing a feedforward for a batch input, the error function will provide a measure of how far off the neural network is from the input. The back propagation phase will use this error measure to update the weight matrices in the neural net in a direction such that the weight change will help reduce the error. To achieve this, a partial differential has to be calculated of the error with respect to the weight at each layer. This can be calculated by using the chain rule for partial derivatives.
 
 \begin{figure}[!t]
 	\centering
@@ -465,7 +465,7 @@ Although a single pass can be performed on a single image, the learning phase is
 \subsubsection{Together}
 A majority of the learning and design phases have been done as a pair. Once that was clear, the implementation responsibilities were distributed.
 \subsubsection{Omkar Kaptan}
-Neural net design and data structures, feed forward algorithm.
+Neural net design and data structures, feedforward algorithm.
 \subsubsection{Gerard Lawrence Pinto}
 Backpropagation, utility functions, activation functions, error functions
 
