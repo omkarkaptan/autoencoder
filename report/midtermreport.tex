@@ -444,7 +444,7 @@ An Auto-encoder needs to be trained to produce a lower dimensional encoding whic
 This section of the report describes about the technical implementation including design and architecture in building the Auto-encoder.
 
 \subsection{Languages and libraries}
-The language was chosen as Python for this project. The numpy library was extensively used for performing mathematical operations like dot products or matrix operations for example. The PyUnit framework is used to write unit tests for this project.
+The language chosen is Python for this project. The numpy library was extensively used for performing mathematical operations like dot products or matrix operations for example. The PyUnit framework is used to write unit tests for this project.
 
 \subsection{Design}
 An object oriented approach is chosen to design the Auto-encoder. An object is created for the neural net and for each entity of the neural network, namely, a layer and the weight matrix. This approach allows for a flexible and modular design. It is possible to initialize a neural network containing any number of layers and any number of neurons per layer. The design of the neural net is made inherently extensible by appropriate use of python features and design principles. For example, the activation function and error function to be used by the neural network follow a common signature and can be passed to the neural network as a parameter. Along with this, several utility functions have been implemented to handle common tasks like file handling and image handling.
@@ -459,7 +459,7 @@ The second challenge that is being dealt with is understanding the subtleties of
 Another challenge being faced presently is the validation of the results obtained when an image is passed.
 
 \section{Next steps and time line}
-Although a single pass can be performed on a single image, the learning phase is not complete yet. After perfecting the implementation of the backpropagation algorithm, the next steps in the implementation are to add batch processing, learning rate and an epoch. Measures will then be taken to improve the accuracy of the Auto-encoder and obtain the required visualizations for the trained neural net. The implementation is expected to complete by November 25th.
+Although a single pass can be performed on a single image, the learning phase is not complete yet. After perfecting the implementation of the backpropagation algorithm, the next steps in the implementation are to add batch processing, learning rate and an epoch. Measures will then be taken to improve the accuracy of the Auto-encoder and obtain the required visualizations for the trained neural net. The implementation is expected to complete by November 25th and final report and poster by 30th November.
 
 \section{Distribution of Responsibilities}
 \subsubsection{Together}
