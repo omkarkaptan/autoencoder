@@ -5,6 +5,7 @@ class NeuralNet:
     layers = None
     activation_function = None
     error_function = None
+    delta = None
 
     def __init__(self, number_of_inputs, neurons_per_hidden_layer, activation_function, error_function):
     	self.layers = []
@@ -43,13 +44,8 @@ class NeuralNet:
 	return input_to_layer # which is the result from the output layer
     
     def backpropogate(self, expected_output, observed_output):
-        error = self.error_function(expected_output, observed_output) # Output layer error
+        delta = expected_output - observed_output
         number_of_hidden_layers = len(self.layers)
-        for layer_number in reversed(range(1, number_of_hidden_layers)):
-            error = self.layers[layer_number].backpropogate(error, self.activation_function)
-            print error
-            print "\n\n"
-        
-        error = self.layers[0].backpropogate(error, self.activation_function) # No previous layer output available for the first layer
-        print error
+        for layer_number in reversed(range(0, number_of_hidden_layers)):
+            delta = self.layers[layer_number].backpropogate(delta, self.activation_function)
         

@@ -5,7 +5,7 @@ class WeightMatrix:
 
     def __init__(self, number_of_inputs, number_of_neurons, bias):
 	print str(number_of_inputs)+";"+str(number_of_neurons)
-	self.weightmatrix = np.random.randn(number_of_inputs, number_of_neurons) # ADD + 1 for bias
+	self.weightmatrix = np.random.randn(number_of_neurons, number_of_inputs)
 	
     def info(self):
 	weightmatrix_dimensions = self.weightmatrix.shape

@@ -11,7 +11,8 @@ def main():
     pgm_image = open("testresources/sample.pgm", "r")
     raster = read_pgm_image(pgm_image)
     raster = np.asarray(raster)
-    X = convert_to_1D_array(raster)  
+    X = convert_to_1D_array(raster)
+    X = X.reshape(len(X), 1)
 #    X = [0.11, 0.2]
     number_of_layers = read_number("Input Number of Hidden Layers: ")
     neurons_per_layer = []
@@ -28,6 +29,8 @@ def main():
     result = neural_net.feedforward(X)
     
     neural_net.backpropogate(X, result)
+    
+    #neural_net.update_weights()
     
     print "Result is: {}".format(result)
     result = result * 255
