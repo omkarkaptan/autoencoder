@@ -22,21 +22,29 @@ class Layer:
 
     def feedforward(self, input_matrix, activation_function):
         self.output_of_previous_layer = input_matrix
-        input_matrix = np.append(input_matrix, 1)
-        input_matrix = input_matrix.reshape(len(input_matrix), 1)
     	self.input_to_layer = np.dot(self.weightmatrix.weightmatrix, input_matrix)
-    	print "Layer: {}".format(self.layer_number)
-    	print "Input to layer: {}".format(len(input_matrix))
-    	print "Input to Neurons: {}".format(self.input_to_layer)
+    	#print "Layer: {}".format(self.layer_number)
+    	#print "Input to layer: {}".format(len(input_matrix))
+    	#print "Input to Neurons: {}".format(self.input_to_layer)
     	self.output_of_layer = activationfunctions.run_activation_function(self.input_to_layer, activation_function)
-    	print "Output of Layer: {}".format(self.output_of_layer)
+    	#print "Output of Layer: {}".format(self.output_of_layer)
     	return self.output_of_layer
     
     def backpropogate(self, delta, activation_function):
-        print self.layer_number
+        #print self.layer_number
         self.delta = delta
-        print delta.shape
-        delta_for_previous_layer = np.delete((np.dot(self.weightmatrix.weightmatrix.T, delta)), len(self.weightmatrix.weightmatrix[0])-1, 0) * activation_function(self.output_of_previous_layer, derivative = True)
+        #print delta.shape
+        delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
         
         return delta_for_previous_layer
-                                                                    
+    
+    def calculate_total_delta(self):
+        #print "Layer #: {}\n".format(self.layer_number)
+        #print "Shape of delta: {}\n".format(self.delta.shape)
+        #print "Shape of previous layer output: {}\n".format(self.output_of_previous_layer.shape)
+        
+        value_to_add_to_capital_delta = np.dot(self.delta, self.output_of_previous_layer.T)
+        self.weightmatrix.add_to_capital_delta(value_to_add_to_capital_delta)
+        
+    def update_weights(self):
+        self.weightmatrix.update_weights()

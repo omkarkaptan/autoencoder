@@ -13,12 +13,12 @@ class NeuralNet:
     	
     #	self.layers.append(input_layer)
     	layer_number = 1
-    	number_of_inputs_from_previous_layer = number_of_inputs + 1
+    	number_of_inputs_from_previous_layer = number_of_inputs
     	for number_of_neurons in neurons_per_hidden_layer:
     	    hidden_layer = Layer(number_of_neurons, number_of_inputs_from_previous_layer, layer_number)
     	    
     	    self.layers.append(hidden_layer)
-    	    number_of_inputs_from_previous_layer = number_of_neurons + 1
+    	    number_of_inputs_from_previous_layer = number_of_neurons
     	    layer_number = layer_number + 1
     
     	output_layer = Layer(number_of_inputs, number_of_inputs_from_previous_layer, layer_number)
@@ -36,6 +36,7 @@ class NeuralNet:
 	    layer.info()
 
     def feedforward(self, external_input):
+        print "=== FEEDFORWARD ==="
         input_to_layer = external_input
 	 
 	for layer in self.layers:
@@ -44,8 +45,26 @@ class NeuralNet:
 	return input_to_layer # which is the result from the output layer
     
     def backpropogate(self, expected_output, observed_output):
+        print "=== BACKPROPAGATE ==="
+        print "Mean Squared Error: {}\n".format(self.error_function(expected_output, observed_output))
         delta = expected_output - observed_output
         number_of_hidden_layers = len(self.layers)
         for layer_number in reversed(range(0, number_of_hidden_layers)):
             delta = self.layers[layer_number].backpropogate(delta, self.activation_function)
         
+    def calculate_total_delta(self):
+        print "=== CALCULATE DELTA ==="
+        number_of_hidden_layers = len(self.layers)
+        for layer_number in reversed(range(0, number_of_hidden_layers)):
+            self.layers[layer_number].calculate_total_delta()
+            
+    def update_weights(self):
+        print "=== UPDATE WEIGHTS ==="
+        number_of_hidden_layers = len(self.layers)
+        for layer_number in range(0, number_of_hidden_layers):
+            self.layers[layer_number].update_weights()
+            
+            
+            
+            
+            

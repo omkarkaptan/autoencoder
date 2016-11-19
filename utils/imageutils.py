@@ -1,4 +1,5 @@
 import os
+import array
 
 def read_pgm_image(pgmf):
     """Return a raster of integers from a PGM as a list of lists.
@@ -24,11 +25,17 @@ def read_pgm_from_directory_generator(imgDirectory):
         yield read_pgm_image(open(imgDirectory + "/" + img, 'r'))
 
 def write_pgm_image(pgm_image_array, width, height, depth, filename, directory=""):
+    image_buffer = array.array('c')
+    
+    for i in range(0, len(pgm_image_array)):
+        image_buffer.append(chr(int(pgm_image_array[i][0])))
+    
+    #print "PGM IMAGE TO BE WRITTEN KA Type: {}".format(type(pgm_image_array))
     if len(pgm_image_array) != 1024:
-	return
+        return
     
     try: 
-	image_file = open(directory + filename, "wb")
+        image_file = open(directory + filename, "wb")
     except IOError, er:
       print "Cannot open file ", filename, "Exiting\n", er
       sys.exit()
@@ -36,7 +43,7 @@ def write_pgm_image(pgm_image_array, width, height, depth, filename, directory="
     pgmfileheader = "P5 {} {} {}\n".format(width, height, depth)
 
     image_file.write(pgmfileheader)
-    pgm_image_array.tofile(image_file)
+    image_buffer.tofile(image_file)
 
     image_file.close()
     
