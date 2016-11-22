@@ -11,6 +11,7 @@ class Layer:
     input_to_layer = None
     
     delta = None
+    bias_delta = None
 
     def __init__(self, number_of_neurons, number_of_inputs_from_previous_layer, layer_number):
 	self.weightmatrix = WeightMatrix(number_of_inputs_from_previous_layer, number_of_neurons, 0) 
@@ -22,7 +23,8 @@ class Layer:
 
     def feedforward(self, input_matrix, activation_function):
         self.output_of_previous_layer = input_matrix
-    	self.input_to_layer = np.dot(self.weightmatrix.weightmatrix, input_matrix)
+    	#self.input_to_layer = np.dot(self.weightmatrix.weightmatrix, input_matrix)
+        self.input_to_layer = self.weightmatrix.dotproduct(input_matrix, bias = True)
     	#print "Layer: {}".format(self.layer_number)
     	#print "Input to layer: {}".format(len(input_matrix))
     	#print "Input to Neurons: {}".format(self.input_to_layer)
@@ -34,7 +36,10 @@ class Layer:
         #print self.layer_number
         self.delta = delta
         #print delta.shape
-        delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
+        self.bias_delta = delta
+        #delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
+        delta_for_previous_layer = self.weightmatrix.dotproduct(delta, transpose = True, bias = False) * activation_function(self.output_of_previous_layer, derivative = True)
+        
         
         return delta_for_previous_layer
     
@@ -46,5 +51,9 @@ class Layer:
         value_to_add_to_capital_delta = np.dot(self.delta, self.output_of_previous_layer.T)
         self.weightmatrix.add_to_capital_delta(value_to_add_to_capital_delta)
         
-    def update_weights(self):
-        self.weightmatrix.update_weights()
+        self.weightmatrix.add_to_capital_delta_of_bias(self.bias_delta)
+        
+    def update_weights(self, batch_size):
+        self.weightmatrix.update_weights(batch_size)
+        
+        

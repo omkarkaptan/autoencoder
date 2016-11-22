@@ -58,11 +58,11 @@ class NeuralNet:
         for layer_number in reversed(range(0, number_of_hidden_layers)):
             self.layers[layer_number].calculate_total_delta()
             
-    def update_weights(self):
+    def update_weights(self, batch_size):
         print "=== UPDATE WEIGHTS ==="
         number_of_hidden_layers = len(self.layers)
         for layer_number in range(0, number_of_hidden_layers):
-            self.layers[layer_number].update_weights()
+            self.layers[layer_number].update_weights(batch_size)
             
             
             

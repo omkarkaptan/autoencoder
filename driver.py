@@ -10,6 +10,7 @@ from sklearn.metrics.regression import mean_squared_error
 def main():
     # Initialize Neural Net
     number_of_inputs = 1024
+    batch_size = 32
     number_of_layers = read_number("Input Number of Hidden Layers: ")
     neurons_per_layer = []
     
@@ -19,26 +20,35 @@ def main():
 
     neural_net = NeuralNet(number_of_inputs, neurons_per_layer, sigmoid, mean_square_error)
 
+    for i in range(0, 50):
+        print "Iteration {}\n".format(i)
+        counter = 0
     
-    
-    pgm_image = open("testresources/sample.pgm", "r")
+        for raster in read_pgm_from_directory_generator("TrainImages"):
+            counter = counter + 1
 
-    raster = read_pgm_image(pgm_image)
+            raster = np.asarray(raster)
+            X = convert_to_1D_array(raster)
+            X = X.reshape(len(X), 1)
+            
+            result = neural_net.feedforward(X)
+            
+            neural_net.backpropogate(X, result)
+            
+            neural_net.calculate_total_delta()
+            
+            if counter == batch_size:
+                print "============================================ UPDATE WEIGHTS ==================================================="
+                neural_net.update_weights(batch_size)
+                counter = 0
+    
+    
+    raster = read_pgm_image(open("TrainImages/Adrien_Brody_0004.pgm"))
     raster = np.asarray(raster)
     X = convert_to_1D_array(raster)
     X = X.reshape(len(X), 1)
-#    X = [0.11, 0.2]
-    #neural_net.info()
-    for i in range(0, 1000):
-        print "Iteration {}\n".format(i)
-        result = neural_net.feedforward(X)
-        
-        neural_net.backpropogate(X, result)
-        
-        neural_net.calculate_total_delta()
-        
-        neural_net.update_weights()
     
+    result = neural_net.feedforward(X)
     print "Input image {}".format(X)
     print "Result is: {}".format(result)
     
