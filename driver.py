@@ -13,7 +13,7 @@ def main():
     batch_size = 32
     number_of_layers = read_number("Input Number of Hidden Layers: ")
     neurons_per_layer = []
-    
+    counter = 0
     for i in range(number_of_layers):
         number_of_neurons = read_number("Input number of neurons in hidden layer {}: ".format(i+1))
         neurons_per_layer.append(number_of_neurons)
@@ -22,6 +22,7 @@ def main():
 
     for i in range(0, 50):
         print "Iteration {}\n".format(i)
+        
         counter = 0
     
         for raster in read_pgm_from_directory_generator("TrainImages"):
@@ -42,7 +43,9 @@ def main():
                 neural_net.update_weights(batch_size)
                 counter = 0
     
-    
+        if counter > 0:
+            neural_net.update_weights(counter)
+ 
     raster = read_pgm_image(open("TrainImages/Adrien_Brody_0004.pgm"))
     raster = np.asarray(raster)
     X = convert_to_1D_array(raster)
