@@ -28,7 +28,7 @@ def write_pgm_image(pgm_image_array, width, height, depth, filename, directory="
     image_buffer = array.array('c')
     
     for i in range(0, len(pgm_image_array)):
-        image_buffer.append(chr(int(pgm_image_array[i][0])))
+        image_buffer.append(chr(int(round(pgm_image_array[i][0]))))
     
     #print "PGM IMAGE TO BE WRITTEN KA Type: {}".format(type(pgm_image_array))
     if len(pgm_image_array) != 1024:
