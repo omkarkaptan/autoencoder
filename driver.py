@@ -58,6 +58,10 @@ def main():
     print "Difference before scale up is : {}".format(X-result)
     result = result * 255
     write_pgm_image(result, 32, 32, 255, 'test_output.pgm', directory="/home/gerard/git/autoencoder/output/")
+    
+    print "====================================== TASK 3 ============================================ \n"
+    neural_net.visualize_trained_autoencoder(number_of_inputs)
+    
 
 if __name__ == "__main__":
     main()

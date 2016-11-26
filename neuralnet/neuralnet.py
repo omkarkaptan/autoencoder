@@ -1,4 +1,7 @@
 from layer import Layer 
+from numpy.core.test_rational import denominator
+import numpy as np
+from utils.imageutils import *
 
 class NeuralNet:
     
@@ -64,7 +67,18 @@ class NeuralNet:
         for layer_number in range(0, number_of_hidden_layers):
             self.layers[layer_number].update_weights(batch_size)
             
-            
-            
-            
-            
+    def visualize_trained_autoencoder(self, image_size):
+        print "VISUALIZE TRAINED AUTO ENCODER - for first hidden layer"
+        first_hidden_layer = self.layers[0]
+        number_of_neurons = len(first_hidden_layer.weightmatrix.weightmatrix)
+        for neuron_index in range(number_of_neurons): # Those many times images will be created
+            output_image = []
+            for pixel_index in range(image_size): # Setting each pixel value
+                
+                neuron_net_input = first_hidden_layer.weightmatrix.neuron_net_input(neuron_index) # RMSE of all the inputs to that neuron
+                input_weight_to_neuron = first_hidden_layer.weightmatrix.weightmatrix[neuron_index][pixel_index] # Weight of the pixel_index onto the neuron_index
+                
+                output_image.append(input_weight_to_neuron / neuron_net_input)
+                
+            output_image = np.asarray(output_image).reshape(len(output_image), 1)
+            write_pgm_image(output_image, 32, 32, 255, 'trained_autoencoder_output ' + str(neuron_index) + '.pgm', directory="/home/gerard/git/autoencoder/trainedencoder/output/")

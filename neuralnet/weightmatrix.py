@@ -1,4 +1,5 @@
 import numpy as np
+from math import sqrt
 
 class WeightMatrix:
     weightmatrix = None
@@ -49,4 +50,7 @@ class WeightMatrix:
     def update_weights(self, batch_size):
         self.weightmatrix = self.learning_rate * self.weightmatrix + self.deltaweightmatrix/(batch_size*1.0)
         self.bias = self.bias_delta / (batch_size*1.0)
+        
+    def neuron_net_input(self, neuron_index):
+        return sqrt(sum(self.weightmatrix[neuron_index]**2))
         
