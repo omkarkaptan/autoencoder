@@ -10,17 +10,17 @@ class WeightMatrix:
     learning_rate = 10 
     
     def initdeltamatrices(self):
-        self.deltaweightmatrix = np.zeros((self.deltaweightmatrix.shape[0], self.deltaweightmatrix.shape[1]))
-        self.bias_delta = np.zeros((self.bias_delta.shape[0], 1))
+        self.deltaweightmatrix = np.zeros((self.weightmatrix.shape[0], self.weightmatrix.shape[1]))
+        self.bias_delta = np.zeros((self.weightmatrix.shape[0], 1))
      
     def __init__(self, number_of_inputs, number_of_neurons, bias):
     	#print str(number_of_inputs)+";"+str(number_of_neurons)
-    	self.weightmatrix = 2*np.random.random((number_of_neurons,number_of_inputs)) - 1 #np.random.randn(number_of_neurons, number_of_inputs)
+    	self.weightmatrix = np.random.randn(number_of_neurons, number_of_inputs) * np.sqrt(2.0/number_of_neurons)
+ #2*np.random.random((number_of_neurons,number_of_inputs)) - 1 #np.random.randn(number_of_neurons, number_of_inputs)
         self.bias = 2*np.random.random((number_of_neurons,1)) - 1
         
-        self.deltaweightmatrix = np.zeros((number_of_neurons, number_of_inputs))
-        self.bias_delta = np.zeros((number_of_neurons, 1))
-	
+        self.initdeltamatrices()
+
     def info(self):
     	weightmatrix_dimensions = self.weightmatrix.shape
     	print "Number of inputs: {}".format(weightmatrix_dimensions[0])
@@ -34,7 +34,7 @@ class WeightMatrix:
            product = np.dot(self.weightmatrix, input_matrix)
         
         if bias: 
-            return product + self.bias
+            return product #+ self.bias
         
         return product
     
@@ -52,6 +52,6 @@ class WeightMatrix:
         
     def update_weights(self, batch_size):
         self.weightmatrix = self.weightmatrix + self.learning_rate * self.deltaweightmatrix/(batch_size*1.0)
-        self.bias = self.bias_delta / (batch_size*1.0)
+ #       self.bias = self.bias + self.learning_rate * self.bias_delta / (batch_size*1.0)
 
         self.initdeltamatrices()

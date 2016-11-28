@@ -34,11 +34,11 @@ class Layer:
     
     def backpropogate(self, delta, activation_function):
         #print self.layer_number
-        self.delta = delta
+        self.delta = delta * activationfunctions.run_activation_function(self.input_to_layer, activation_function)
         #print delta.shape
-        self.bias_delta = delta
+        self.bias_delta = self.delta # ?????
         #delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
-        delta_for_previous_layer = self.weightmatrix.dotproduct(delta, transpose = True, bias = False) * activation_function(self.output_of_previous_layer, derivative = True)
+        delta_for_previous_layer = self.weightmatrix.dotproduct(self.delta, transpose = True, bias = False)
                
         return delta_for_previous_layer
     

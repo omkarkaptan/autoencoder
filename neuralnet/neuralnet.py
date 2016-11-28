@@ -50,10 +50,16 @@ class NeuralNet:
 #        print "=== BACKPROPAGATE ==="
         #print "Mean Squared Error: {}\n".format(self.error_function(expected_output, observed_output))
         self.batch_error = self.batch_error + self.error_function(expected_output, observed_output)
-        delta = expected_output - observed_output
+        delta = expected_output - observed_output # output layer delta
         number_of_layers = len(self.layers)
-        for layer_number in reversed(range(0, number_of_layers)):
-            delta = self.layers[layer_number].backpropogate(delta, self.activation_function)
+#        self.layers[number_of_layers-1].delta = delta
+#        self.layers[number_of_layers-1].bias_delta = delta
+        delta_for_hidden_layer = delta #self.layers[number_of_layers-1].weightmatrix.dotproduct(delta, transpose = True, bias = False) # delta to hidden layer
+        
+        for layer_number in reversed(range(0, number_of_layers-1)):
+            delta = self.layers[layer_number].backpropogate(delta_for_hidden_layer, self.activation_function)
+            delta_for_hidden_layer = delta
+
         
     def calculate_total_delta(self):
  #       print "=== CALCULATE DELTA ==="
@@ -63,7 +69,7 @@ class NeuralNet:
             
     def update_weights(self, batch_size):
 #        print "=== UPDATE WEIGHTS ==="
-        print self.batch_error
+        print self.batch_error/32.0
         self.batch_error = 0
         number_of_hidden_layers = len(self.layers)
         for layer_number in range(0, number_of_hidden_layers):
