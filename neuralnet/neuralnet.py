@@ -7,6 +7,8 @@ class NeuralNet:
     error_function = None
     delta = None
 
+    batch_error = 0
+
     def __init__(self, number_of_inputs, neurons_per_hidden_layer, activation_function, error_function):
     	self.layers = []
     #	input_layer = Layer(number_of_inputs, number_of_inputs, 0) # NUMBER OF NEURONS SAME AS NUMBER OF INPUTS
@@ -36,7 +38,7 @@ class NeuralNet:
 	    layer.info()
 
     def feedforward(self, external_input):
-        print "=== FEEDFORWARD ==="
+#        print "=== FEEDFORWARD ==="
         input_to_layer = external_input
 	 
 	for layer in self.layers:
@@ -45,21 +47,24 @@ class NeuralNet:
 	return input_to_layer # which is the result from the output layer
     
     def backpropogate(self, expected_output, observed_output):
-        print "=== BACKPROPAGATE ==="
-        print "Mean Squared Error: {}\n".format(self.error_function(expected_output, observed_output))
+#        print "=== BACKPROPAGATE ==="
+        #print "Mean Squared Error: {}\n".format(self.error_function(expected_output, observed_output))
+        self.batch_error = self.batch_error + self.error_function(expected_output, observed_output)
         delta = expected_output - observed_output
-        number_of_hidden_layers = len(self.layers)
-        for layer_number in reversed(range(0, number_of_hidden_layers)):
+        number_of_layers = len(self.layers)
+        for layer_number in reversed(range(0, number_of_layers)):
             delta = self.layers[layer_number].backpropogate(delta, self.activation_function)
         
     def calculate_total_delta(self):
-        print "=== CALCULATE DELTA ==="
+ #       print "=== CALCULATE DELTA ==="
         number_of_hidden_layers = len(self.layers)
         for layer_number in reversed(range(0, number_of_hidden_layers)):
             self.layers[layer_number].calculate_total_delta()
             
     def update_weights(self, batch_size):
-        print "=== UPDATE WEIGHTS ==="
+#        print "=== UPDATE WEIGHTS ==="
+        print self.batch_error
+        self.batch_error = 0
         number_of_hidden_layers = len(self.layers)
         for layer_number in range(0, number_of_hidden_layers):
             self.layers[layer_number].update_weights(batch_size)

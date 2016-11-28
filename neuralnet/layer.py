@@ -39,8 +39,7 @@ class Layer:
         self.bias_delta = delta
         #delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
         delta_for_previous_layer = self.weightmatrix.dotproduct(delta, transpose = True, bias = False) * activation_function(self.output_of_previous_layer, derivative = True)
-        
-        
+               
         return delta_for_previous_layer
     
     def calculate_total_delta(self):

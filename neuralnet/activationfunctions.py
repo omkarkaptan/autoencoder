@@ -1,4 +1,5 @@
 import numpy as np
+import bigfloat
 
 def sigmoid(out,derivative=False):
     if(derivative==True):

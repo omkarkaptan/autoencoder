@@ -7,8 +7,12 @@ class WeightMatrix:
     deltaweightmatrix = None
     bias_delta = None
     
-    learning_rate = 0.001
-
+    learning_rate = 10 
+    
+    def initdeltamatrices(self):
+        self.deltaweightmatrix = np.zeros((self.deltaweightmatrix.shape[0], self.deltaweightmatrix.shape[1]))
+        self.bias_delta = np.zeros((self.bias_delta.shape[0], 1))
+     
     def __init__(self, number_of_inputs, number_of_neurons, bias):
     	#print str(number_of_inputs)+";"+str(number_of_neurons)
     	self.weightmatrix = 2*np.random.random((number_of_neurons,number_of_inputs)) - 1 #np.random.randn(number_of_neurons, number_of_inputs)
@@ -47,6 +51,7 @@ class WeightMatrix:
         self.bias_delta = self.bias_delta + bias_delta
         
     def update_weights(self, batch_size):
-        self.weightmatrix = self.learning_rate * self.weightmatrix + self.deltaweightmatrix/(batch_size*1.0)
+        self.weightmatrix = self.weightmatrix + self.learning_rate * self.deltaweightmatrix/(batch_size*1.0)
         self.bias = self.bias_delta / (batch_size*1.0)
-        
+
+        self.initdeltamatrices()
