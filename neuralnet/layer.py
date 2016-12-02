@@ -34,9 +34,9 @@ class Layer:
     
     def backpropogate(self, delta, activation_function):
         #print self.layer_number
-        self.delta = delta * activationfunctions.run_activation_function(self.input_to_layer, activation_function)
+        self.delta = delta * activation_function(self.input_to_layer, derivative=True)
         #print delta.shape
-        self.bias_delta = self.delta # ?????
+#        self.bias_delta = self.delta # ?????
         #delta_for_previous_layer = (np.dot(self.weightmatrix.weightmatrix.T, delta)) * activation_function(self.output_of_previous_layer, derivative = True)
         delta_for_previous_layer = self.weightmatrix.dotproduct(self.delta, transpose = True, bias = False)
                
@@ -50,7 +50,7 @@ class Layer:
         value_to_add_to_capital_delta = np.dot(self.delta, self.output_of_previous_layer.T)
         self.weightmatrix.add_to_capital_delta(value_to_add_to_capital_delta)
         
-        self.weightmatrix.add_to_capital_delta_of_bias(self.bias_delta)
+#        self.weightmatrix.add_to_capital_delta_of_bias(self.bias_delta)
         
     def update_weights(self, batch_size):
         self.weightmatrix.update_weights(batch_size)

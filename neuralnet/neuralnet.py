@@ -50,11 +50,12 @@ class NeuralNet:
 #        print "=== BACKPROPAGATE ==="
         #print "Mean Squared Error: {}\n".format(self.error_function(expected_output, observed_output))
         self.batch_error = self.batch_error + self.error_function(expected_output, observed_output)
-        delta = expected_output - observed_output # output layer delta
+
         number_of_layers = len(self.layers)
-#        self.layers[number_of_layers-1].delta = delta
+        delta = (expected_output - observed_output) * self.activation_function(self.layers[number_of_layers-1].input_to_layer, derivative=True) # output layer delta
+        self.layers[number_of_layers-1].delta = delta
 #        self.layers[number_of_layers-1].bias_delta = delta
-        delta_for_hidden_layer = delta #self.layers[number_of_layers-1].weightmatrix.dotproduct(delta, transpose = True, bias = False) # delta to hidden layer
+        delta_for_hidden_layer = self.layers[number_of_layers-1].weightmatrix.dotproduct(delta, transpose=True, bias=False) #self.layers[number_of_layers-1].weightmatrix.dotproduct(delta, transpose = True, bias = False) # delta to hidden layer
         
         for layer_number in reversed(range(0, number_of_layers-1)):
             delta = self.layers[layer_number].backpropogate(delta_for_hidden_layer, self.activation_function)

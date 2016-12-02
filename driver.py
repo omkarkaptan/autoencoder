@@ -12,11 +12,11 @@ def main():
     number_of_inputs = 1024
     batch_size = 32
     #number_of_layers = read_number("Input Number of Hidden Layers: ")
-    number_of_layers = 2
+    number_of_layers = 1
     neurons_per_layer = []
     counter = 0
 
-    for k in range(6, 7):        
+    for k in range(9, 10):        
         for j in range(number_of_layers):
             #number_of_neurons = read_number("Input number of neurons in hidden layer {}: ".format(i+1))
             number_of_neurons = 2**k
@@ -24,7 +24,7 @@ def main():
 
         neural_net = NeuralNet(number_of_inputs, neurons_per_layer, sigmoid, mean_square_error)
 
-        for i in range(0, 50):
+        for i in range(0, 5):
             print "Iteration {}\n".format(i)
             
             counter = 0
@@ -62,7 +62,7 @@ def main():
         print "Result is: {}".format(result)
         
         print "Difference before scale up is : {}".format(X-result)
-        result = result * 255
+        #result = result * 255
         write_pgm_image(result, 32, 32, 255, "test_output_{}.pgm".format(number_of_neurons), directory="output/")
 
 if __name__ == "__main__":
