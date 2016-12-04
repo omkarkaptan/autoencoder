@@ -12,8 +12,8 @@ class Layer:
 
     delta = None
 
-    def __init__(self, number_of_neurons, number_of_inputs_from_previous_layer, layer_number):
-	self.weightmatrix = WeightMatrix(number_of_inputs_from_previous_layer, number_of_neurons, 0)
+    def __init__(self, number_of_neurons, number_of_inputs_from_previous_layer, layer_number, learning_rate):
+	self.weightmatrix = WeightMatrix(number_of_inputs_from_previous_layer, number_of_neurons, 0, learning_rate)
 	self.layer_number = layer_number
 
     def info(self):

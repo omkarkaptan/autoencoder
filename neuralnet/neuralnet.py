@@ -7,7 +7,7 @@ class NeuralNet:
     error_function = None
     delta = None
     batch_error = None
-    def __init__(self, number_of_inputs, neurons_per_hidden_layer, activation_function, error_function):
+    def __init__(self, number_of_inputs, neurons_per_hidden_layer, activation_function, error_function, learning_rate):
     	self.layers = []
     #	input_layer = Layer(number_of_inputs, number_of_inputs, 0) # NUMBER OF NEURONS SAME AS NUMBER OF INPUTS
 
@@ -15,13 +15,13 @@ class NeuralNet:
     	layer_number = 1
     	number_of_inputs_from_previous_layer = number_of_inputs
     	for number_of_neurons in neurons_per_hidden_layer:
-    	    hidden_layer = Layer(number_of_neurons, number_of_inputs_from_previous_layer, layer_number)
+    	    hidden_layer = Layer(number_of_neurons, number_of_inputs_from_previous_layer, layer_number, learning_rate)
 
     	    self.layers.append(hidden_layer)
     	    number_of_inputs_from_previous_layer = number_of_neurons
     	    layer_number = layer_number + 1
 
-    	output_layer = Layer(number_of_inputs, number_of_inputs_from_previous_layer, layer_number)
+    	output_layer = Layer(number_of_inputs, number_of_inputs_from_previous_layer, layer_number, learning_rate)
     	self.layers.append(output_layer)
 
     	self.activation_function = activation_function
