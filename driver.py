@@ -8,7 +8,7 @@ from neuralnet.activationfunctions import *
 from sklearn.metrics.regression import mean_squared_error
 
 def main():
-    # Initialize Neural Net
+    # ======== INITIALIZE ======== #
     number_of_inputs = 1024
     number_of_layers = read_number("Input Number of Hidden Layers: ")
     neurons_per_layer = []
@@ -19,20 +19,10 @@ def main():
 
     neural_net = NeuralNet(number_of_inputs, neurons_per_layer, sigmoid, mean_square_error)
 
-
-
-    pgm_image = open("testresources/sample.pgm", "r")
-
-    raster = read_pgm_image(pgm_image)
-    raster = np.asarray(raster)
-    X = convert_to_1D_array(raster)
-    X = X.reshape(len(X), 1)
     batch_size = 32
-#    X = [0.11, 0.2]
-    #neural_net.info()
-    for i in range(0, 50):
-        print "Iteration {}\n".format(i)
 
+    # ======== TRAIN ======== #
+    for i in range(0, 50):
         counter = 0
 
         for raster in read_pgm_from_directory_generator("TrainImages"):
@@ -41,7 +31,6 @@ def main():
             raster = np.asarray(raster)
             X = convert_to_1D_array(raster)
             X = X.reshape(len(X), 1)
-            #X.astype('float64')
 
             result = neural_net.feedforward(X)
 
@@ -50,21 +39,37 @@ def main():
             neural_net.calculate_total_delta()
 
             if counter == batch_size:
-        #                    print "============================================ UPDATE WEIGHTS ==================================================="
                 neural_net.update_weights(batch_size)
                 counter = 0
 
         if counter > 0:
             neural_net.update_weights(counter)
 
-        print "Mean Squared Error: {}\n".format(mean_square_error(X, result))
+    # ======== VALIDATE ======== #
+    counter = 0
+    rmse = 0
+    for raster in read_pgm_from_directory_generator("ValImages"):
+        raster = np.asarray(raster)
+        X = convert_to_1D_array(raster)
+        X = X.reshape(len(X), 1)
+        result = neural_net.feedforward(X)
+        rmse = rmse + mean_square_error(X, result)
+        counter = counter + 1
+    print "Mean Squared Error for Validation Set: {}\n".format(rmse/counter)
 
-    print "Input image {}".format(X)
-    print "Result is: {}".format(result)
-
-    print "Difference before scale up is : {}".format(X-result)
-    result = result * 255
-    write_pgm_image(result, 32, 32, 255, 'test_output.pgm', directory="output/")
+    # ======== TEST ======== #
+    counter = 0
+    rmse = 0
+    for raster in read_pgm_from_directory_generator("TestImages"):
+        raster = np.asarray(raster)
+        X = convert_to_1D_array(raster)
+        X = X.reshape(len(X), 1)
+        result = neural_net.feedforward(X)
+        rmse = rmse + mean_square_error(X, result)
+        counter = counter + 1
+    print "Mean Squared Error for Test Set: {}\n".format(rmse/counter)
+#    result = result * 255
+#    write_pgm_image(result, 32, 32, 255, 'test_output.pgm', directory="output/")
 
 if __name__ == "__main__":
     main()
