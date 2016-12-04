@@ -1,5 +1,6 @@
 import os
 import array
+import sys
 
 def read_pgm_image(pgmf):
     """Return a raster of integers from a PGM as a list of lists.
@@ -35,7 +36,7 @@ def write_pgm_image(pgm_image_array, width, height, depth, filename, directory="
         return
     
     try: 
-        image_file = open(directory + filename, "wb")
+        image_file = open(directory + filename, "wb+")
     except IOError, er:
       print "Cannot open file ", filename, "Exiting\n", er
       sys.exit()
