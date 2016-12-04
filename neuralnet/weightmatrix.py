@@ -6,7 +6,7 @@ class WeightMatrix:
     deltaweightmatrix = None
     bias_delta = None
 
-    learning_rate = 0.001
+    learning_rate = 0.01
 
     def initdeltamatrices(self):
         self.deltaweightmatrix = np.zeros((self.weightmatrix.shape[0], self.weightmatrix.shape[1]))

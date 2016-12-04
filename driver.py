@@ -57,6 +57,8 @@ def main():
         if counter > 0:
             neural_net.update_weights(counter)
 
+        print "Mean Squared Error: {}\n".format(mean_square_error(X, result))
+
     print "Input image {}".format(X)
     print "Result is: {}".format(result)
 

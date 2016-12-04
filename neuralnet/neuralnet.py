@@ -69,7 +69,7 @@ class NeuralNet:
 
     def update_weights(self, batch_size):
     #        print "=== UPDATE WEIGHTS ==="
-        print self.batch_error/32.0
+    #    print self.batch_error/32.0
         self.batch_error = 0
         number_of_hidden_layers = len(self.layers)
         for layer_number in range(0, number_of_hidden_layers):
