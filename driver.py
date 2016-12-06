@@ -18,11 +18,11 @@ def main():
     result_file = open(statistics_file_name, "wb+")
     neurons_per_layer = []
 
-    for learning_rate in [0.001, 0.01]:
+    for learning_rate in [0.01]:
         result_file.write("Learning Rate: {}\n".format(learning_rate))
-        for number_of_iterations in [50, 100, 150]:
+        for number_of_iterations in [10]:
             result_file.write("Number of iterations: {}\n".format(number_of_iterations))
-            for number_of_neurons in [64, 128, 256, 512]:
+            for number_of_neurons in [4096]:
                 result_file.write("Number of neurons: {}\n".format(number_of_neurons))
                 for i in range(number_of_layers):
                     neurons_per_layer.append(number_of_neurons)

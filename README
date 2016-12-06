@@ -1,0 +1,7 @@
+CSE 569 - Autoencoder Code
+===========================
+
+- To run the code, any one of 2 driver programs can be used.
+- driver.py can be modified to set the number of iterations, number of neurons per layer, number of layers and learning rate in the respective list or variable to run the program with said combinations of configurations.
+Appropriate console messages can be added to each of the loops to track progress
+- driver_mod.py will ask for the number of layers and number of neurons per layer as an input and run 50 iterations on the training dataset with a learning rate of 0.01
